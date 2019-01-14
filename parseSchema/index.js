@@ -29,15 +29,36 @@ function setParseSchema (serverConfig) {
   const contactSchema = new Parse.Schema('contacts');
 
   contactSchema
-    .addString('birthCountry')
-    .addString('ethnicity')
-    .addString('race')
-    .addString('genderIdentity')
-    .addString('uid')
-    .addDate('dateOfBirth')
-    .addDate('firstInjectionAge')
-    .addDate('dateOfBirth')
+    // fields are listed by type and in alphabetical order.  In dashboard you may move columns around to examine.
+    .addArray('otherDrugs')
+    .addArray('otherDrugsAggregate')
+
+    .addBoolean('didOdLastYear')
+    .addBoolean('hasHealthInsurance')
     .addBoolean('hispanic')
+    .addBoolean('isEnrolled')
+    .addBoolean('isInCareForHepC')
+    .addBoolean('isInCareForHiv')
+
+    .addDate('dateOfBirth')
+    .addDate('dateOfLastVisit')
+    .addDate('ageOfFirstInjection')
+
+    .addNumber('syringesGivenAggregate')
+    .addNumber('syringesTakenAggregate')
+
+    .addString('countryOfBirth')
+    .addString('ethnicity')
+    .addString('genderIdentity')
+    .addString('healthInsurer')
+    .addString('hepCStatus')
+    .addString('hivStatus')
+    .addString('housingStatus')
+    .addString('primaryDrug')
+    .addString('profileNotes')
+    .addString('uid')    
+    .addString('zipCode')
+
     .get()
     .then(existingSchemaData => updateSchemaOnlyWhenNecessary(existingSchemaData, contactSchema))
     .catch(error => ((error.code === Parse.Error.INVALID_CLASS_NAME) ? contactSchema.save() : Promise.reject(error)))
@@ -45,31 +66,43 @@ function setParseSchema (serverConfig) {
   const eventSchema = new Parse.Schema('event');
 
   eventSchema
-    .addNumber('ageOfFirstInjection')
-    .addNumber('numberOfOthersHelping')
-    .addNumber('syringesGiven')
-    .addNumber('syringesTaken')
-    .addString('countryOfBirth')
+    // fields are listed by type and in alphabetical order.  In dashboard you may move columns around to examine.
     .addArray('otherDrugs')
-    .addDate('dateOfBirth')
-    .addDate('date')
-    .addDate('newContactDate')
-    .addString('ethnicity')
-    .addString('primaryDrug')
-    .addString('genderIdentity')
-    .addString('hivStatus')
-    .addString('hepCStatus')
-    .addString('housingStatus')
+    .addArray('referrals')
+
+    .addBoolean('didOdLastYear')
+    .addBoolean('hasHealthInsurance')
+    .addBoolean('hispanic')
     .addBoolean('isEnrolled')
     .addBoolean('isInCareForHepC')
     .addBoolean('isInCareForHiv')
     .addBoolean('isOutreach')
-    .addBoolean('narcanWasOffered')
     .addBoolean('narcanWasTaken')
-    .addBoolean('didOdLastYear')
-    .addBoolean('hasHealthInsurance')
-    .addBoolean('hispanic')
+    .addBoolean('narcanWasOffered')
+
+    .addDate('date')
+    .addDate('dateOfBirth')
+    .addDate('newContactDate')
+    
+    .addNumber('ageOfFirstInjection')    
+    .addNumber('numberOfOthersHelping')    
+    .addNumber('syringesGiven')
+    .addNumber('syringesTaken')
+
     .addRelation('uid', 'contacts')
+    
+    .addString('countryOfBirth')
+    .addString('ethnicity')
+    .addString('eventNotes')
+    .addString('genderIdentity')
+    .addString('healthInsurer')
+    .addString('hepCStatus')
+    .addString('hivStatus')
+    .addString('housingStatus')
+    .addString('primaryDrug')
+    .addString('profileNotes')
+    .addString('zipCode')
+
     .get()
     .then(existingSchemaData => updateSchemaOnlyWhenNecessary(existingSchemaData, eventSchema))
     .catch(error => ((error.code === Parse.Error.INVALID_CLASS_NAME) ? eventSchema.save() : Promise.reject(error)))
