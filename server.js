@@ -21,7 +21,6 @@ const nconf = require('nconf');
 const ParseServer = require('parse-server').ParseServer;
 const path = require('path');
 const yml = require('js-yaml');
-const setParseSchema = require('./parseSchema');
 const ymlFormatter = { parse: yml.safeLoad, stringify: yml.safeDump };
 
 var projectId, connectionName, databaseName;
@@ -120,6 +119,7 @@ app.get('/dummy.js', function (req, res) {
 app.get('/parse/ahopeinit', function (req, res) {
   console.log("Request to initialize has been received.");
   res.type('text/plain').send("Schema initialization will start.");
+  const setParseSchema = require('./parseSchema');
   setParseSchema(serverConfig);
 });
 
